@@ -1,108 +1,151 @@
--   <a href="#primer-paso" id="toc-primer-paso">Primer paso</a>
--   <a href="#api-paso-a-paso" id="toc-api-paso-a-paso">API Paso a Paso</a>
-    -   <a href="#configuración-de-las-credenciales"
-        id="toc-configuración-de-las-credenciales">Configuración de las
-        credenciales</a>
-    -   <a href="#lo-básico" id="toc-lo-básico">1. Lo Básico</a>
-        -   <a href="#uso-de-la-interfaz-gráfica-de-usuario-de-facebook-marketing"
-            id="toc-uso-de-la-interfaz-gráfica-de-usuario-de-facebook-marketing">Uso
-            de la interfaz gráfica de usuario de Facebook Marketing</a>
-        -   <a href="#utilizando-urls-básicos"
-            id="toc-utilizando-urls-básicos">Utilizando URLs básicos</a>
-    -   <a href="#descarga-de-datos-de-forma-programática"
-        id="toc-descarga-de-datos-de-forma-programática">2. Descarga de datos de
-        forma programática</a>
-    -   <a href="#población-total-desglosada-por-edad-sexo-y-país"
-        id="toc-población-total-desglosada-por-edad-sexo-y-país">3. Población
-        total desglosada por edad, sexo y país</a>
-    -   <a
-        href="#población-total-que-coincide-con-determinadas-características-desglosada-por-edad-sexo-y-país"
-        id="toc-población-total-que-coincide-con-determinadas-características-desglosada-por-edad-sexo-y-país">4.
-        Población total que coincide con determinadas características desglosada
-        por edad, sexo y país</a>
-    -   <a href="#agregando-variables-que-no-están-en-la-lista"
-        id="toc-agregando-variables-que-no-están-en-la-lista">Agregando
-        variables que no están en la lista:</a>
-    -   <a href="#variables-geográficas"
-        id="toc-variables-geográficas">Variables geográficas</a>
-        -   <a href="#de-país-a-región" id="toc-de-país-a-región">De país a
-            región</a>
+-   <a href="#first-step" id="toc-first-step">First step</a>
+-   <a href="#api-step-by-step" id="toc-api-step-by-step">API Step by
+    Step</a>
+    -   <a href="#credential-settings" id="toc-credential-settings">Credential
+        Settings</a>
+    -   <a href="#the-basics" id="toc-the-basics">The basics</a>
+        -   <a href="#using-the-facebook-marketing-graphic-user-interface"
+            id="toc-using-the-facebook-marketing-graphic-user-interface">Using the
+            Facebook Marketing Graphic User Interface</a>
+        -   <a href="#using-basic-urls" id="toc-using-basic-urls">1.Using Basic
+            URLs</a>
+        -   <a href="#download-data-programmatically"
+            id="toc-download-data-programmatically">2.Download data
+            programmatically</a>
+        -   <a href="#total-population-disaggregated-by-age-sex-and-country"
+            id="toc-total-population-disaggregated-by-age-sex-and-country">3.Total
+            population disaggregated by age, sex and country</a>
+        -   <a
+            href="#total-population-matching-certain-characteristics-broken-down-by-age-sex-and-country"
+            id="toc-total-population-matching-certain-characteristics-broken-down-by-age-sex-and-country">4.Total
+            population matching certain characteristics broken down by age, sex and
+            country</a>
+    -   <a href="#more-sofisticated-queries"
+        id="toc-more-sofisticated-queries">More Sofisticated Queries</a>
+        -   <a href="#adding-variables-that-are-not-in-the-lists"
+            id="toc-adding-variables-that-are-not-in-the-lists">Adding variables
+            that are not in the lists</a>
+        -   <a href="#geographic-variables" id="toc-geographic-variables">Geographic
+            variables</a>
 
 <!--  https://bookdown.org/yihui/rmarkdown/html-document.html -->
 
-Este tutorial es una adaptación del que di en 2019:
+This tutorial is an adaptation of the one I gave in 2019:
 <https://github.com/SofiaG1l/Using_Facebook_API>
 
-# Primer paso
+**If you find the tutorial useful, then please do not forget to cite my
+Facebook articles:**
 
-Para generar el token necesitaremos habilitar la publicidad de Facebook
-en tu cuenta de Facebook.
+-   Gil-Clavel, Sofia, and Emilio Zagheni. “Demographic Differentials in
+    Facebook Usage around the World.” Proceedings of the International
+    AAAI Conference on Web and Social Media 13 (2019): 647–50.
 
-Para ello puedes seguir esta guía:
+-   Gil-Clavel, Sofia, Emilio Zagheni, and Valeria Bordone. “Close
+    Social Networks Among Older Adults: The Online and Offline
+    Perspectives.” Population Research and Policy Review, October
+    26, 2021. <https://doi.org/10.1007/s11113-021-09682-3>.
+
+# First step
+
+To generate the token we will need to enable Facebook advertising on
+your Facebook account.
+
+To do this you can follow this guide:
 <https://github.com/SofiaG1l/Using_Facebook_API/blob/master/First_Step.pdf>
 
-Una vez que tengas una cuenta de desarrollador, puedes utilizar los
-siguientes enlaces para:
+Once you have a developer account, you can use the following links to:
 
--   Acceder a tus aplicaciones: <https://developers.facebook.com/apps/>
+-   Access your applications: <https://developers.facebook.com/apps/>
 
--   Para monitorear cuándo caduca tu token:
+-   To monitor when your token expires:
     <https://developers.facebook.com/tools/debug/accesstoken>
 
-# API Paso a Paso
+# API Step by Step
 
+    # Cleaning the R Environment
     rm(list=ls())
+
+    # Cleaning the Computer Memory
     gc()
 
-## Configuración de las credenciales
+## Credential Settings
 
-    token="<Your Token>"
+    token="<Your Token>" # Change the "Your Token" with your token and delete the: <>
 
-    act="<Your Act>"
+    act="<Your Act>" # Change the "Your Act" with your Creation Act and delete the: <>
 
-    version="vXX.X" # Cambia las Xs por tu versión y borra: <<>>
+    version="<vXX.X>" # Change the Xs for your version and delete the: <>
 
     Credentials=paste0('https://graph.facebook.com/',version,'/act_',act,'/delivery_estimate?access_token=',token,'&include_headers=false&method=get&optimization_goal=REACH&pretty=0&suppress_http_code=1')
 
-## 1. Lo Básico
+## The basics
 
-### Uso de la interfaz gráfica de usuario de Facebook Marketing
+### Using the Facebook Marketing Graphic User Interface
+
+In the next pdf, I explain how to access the Graphic User Interface of
+the Facebook Marketing Manager. In it, I check the number of Facebook
+users that are German and older than 17 years old. As you can see, the
+Facebook Marketing Manager returns the “Estimated audience size” of
+Facebook users in Germany that are older than 17 years old, which in
+April 21st 2022 was between 40.4 million and 47.6 million.
 
 <https://github.com/SofiaG1l/Taller_COLMEX_API/blob/main/Facebook_API/FB_GUI_Audience.pdf>
 
-### Utilizando URLs básicos
+### 1.Using Basic URLs
 
-    # Primero vamos a intentar usar un navegador, reemplaza tus datos en la siguiente URL:
+First, we will try to use a browser. I would recommend you to use
+Mozilla, as it displays the result in a nicer manner than Google Chrome.
+
+What you need to do with the following link is to replace your
+credentials where necessary and then copy the full link into your
+browser.
 
     # https://graph.facebook.com/<<vXX.X>>/act_<<ACT>>/delivery_estimate?access_token=<<TOKEN>>&include_headers=false&method=get&pretty=0&suppress_http_code=1&method=get&optimization_goal=REACH&pretty=0&suppress_http_code=1&targeting_spec={"geo_locations":{"countries":["MX"]},"genders":[1,2] ,"age_min":18, "age_max":65}
 
-## 2. Descarga de datos de forma programática
+This should return/display a type of data called JSON. In it you will
+see the next variables:
 
-Para descargar y transformar los datos a un data frame utilizaremos los
-paquetes **httr**, **jsonlite** y **tidyverse**.
+-   daily\_outcomes\_curve
+-   estimate\_dau
+-   estimate\_mau\_lower\_bound
+-   estimate\_mau\_upper\_bound
+-   estimate\_ready
+
+You can learn more about them here:
+<https://developers.facebook.com/docs/marketing-api/audiences/reference/estimated-daily-results/>
+
+### 2.Download data programmatically
+
+To download and transform the data to a data frame we will use the
+packages **httr**, **jsonlite** y **tidyverse**. If you have not
+installed them in R, then first you would need to use the function
+*install.packages(“name”)* replacing **name** by the name of the
+package.
 
     require(httr)
     require(jsonlite)
     require(tidyverse)
 
-## 3. Población total desglosada por edad, sexo y país
+### 3.Total population disaggregated by age, sex and country
 
-    # Vamos a configurar nuestras variables iniciales, se guardarán en R y luego las concatenaremos en una cadena.
+The parameters we use are in JSON format. You can learn more about that
+format in the next
+[linnk](https://www.w3schools.com/js/js_json_intro.asp). We will handle
+the format in R using strings.
+
+-   age\_min: integer value
+-   age\_max: integer value
+-   genders: integer value
+-   geo\_locations: JSON object where *country* is a matrix
+
+<!-- -->
 
     Age1=18
     Age2=65
 
-    g="1,2" # 1:hombre and 2:mujer, pero si queremos descargar ambos géneros g="1,2"
+    g="1,2" # 1:male and 2:female, and both is: g="1,2"
 
-    C='"MX"' # Código del País
-
-    # Los parámetros que utilizaremos están en formato JSON(https://www.w3schools.com/js/js_json_intro.asp), pero los
-    # manejaremos en R a través de una cadena:
-    #   
-    # * age_min: es un valor
-    # * age_max: es un valor
-    # * genders: es un valor
-    # * geo_locations: es un objeto JSON donde *país* es una matriz
+    C='"MX"' # The ISO-2 code of the country
 
     query <- paste0(Credentials,'&
                     targeting_spec={
@@ -116,10 +159,11 @@ paquetes **httr**, **jsonlite** y **tidyverse**.
 
     t(query_val$data)
 
-## 4. Población total que coincide con determinadas características desglosada por edad, sexo y país
+### 4.Total population matching certain characteristics broken down by age, sex and country
 
-El primer paso es conocer el nombre de todas las posibles variables que
-podemos consultar. Hay tres clases diferentes:
+The first step is to know the name of all the possible variables that we
+can query. There are three different classes that you can call by
+changing the parameter *class*:
 
 -   demographics
 -   interests
@@ -145,8 +189,8 @@ podemos consultar. Hay tres clases diferentes:
 
     View(DF_CHARTICS)
 
-Ahora vamos a preparar una consulta básica, para ello sólo tienes que
-elegir una variable y guardar la siguiente información:
+Now we are going to prepare a basic query, for this you just have to
+choose a variable and save the following information:
 
     ROW=1
 
@@ -154,10 +198,10 @@ elegir una variable y guardar la siguiente información:
     (ID=DF_CHARTICS$id[ROW])
     (NAME=DF_CHARTICS$name[ROW])
 
-Para segmentar poblaciones que coincidan con características específicas
-utilizaremos el parámetro *flexible\_spec* de la API de Marketing de
-Facebook, este parámetro es un objeto JSON. Para incorporarlo a nuestra
-cadena inicial, guardaremos la cadena en la variable **CHARTICS**.
+To segment populations that match specific characteristics we will use
+the *flexible\_spec* parameter of the Facebook Marketing API, this
+parameter is a JSON object. To incorporate it into our initial string,
+we’ll store the string in the variable **CHARTICS**.
 
     CHARTICS<-paste0(',"flexible_spec":[{"',TYPE,'":[{"id":"',ID,'","name":"',NAME,'"}]}]')
 
@@ -179,10 +223,13 @@ cadena inicial, guardaremos la cadena en la variable **CHARTICS**.
 
     t(query_val$data)
 
-En el caso de las características específicas, puedes hacer el siguiente
-tipo de consultas:
+In the case of specific characteristics, you can make the following
+types of queries:
+<https://developers.facebook.com/docs/marketing-api/audiences/reference/advanced-targeting#broadcategories>
 
--   una característica **y** otra\*:
+Here is how to translate the examples in the link to R:
+
+-   one characteristic **and** another:
 
 <!-- -->
 
@@ -193,7 +240,7 @@ tipo de consultas:
                         "TYPE_2":[{"id":"ID_2","name":"NAME_2"}]
                       }]'
 
--   -   una característica **o** otra\*:
+-   one feature **or** another:
 
 <!-- -->
 
@@ -202,8 +249,8 @@ tipo de consultas:
         "TYPE_2":[{"id":"ID_2","name":"NAME_2"}]
       }]'
 
-En el caso de OR necesitamos agrupar por TIPO. Mira el siguiente
-ejemplo: *Gente que es viajera O le gusta el fútbol O el cine.*
+In the case of OR we need to group by TYPE. Check the following example:
+*People who are travelers OR like soccer OR movies*
 
     '"flexible_spec": [{ 
         "behaviors": [
@@ -214,9 +261,6 @@ ejemplo: *Gente que es viajera O le gusta el fútbol O el cine.*
               {"id":6003139266461,"name":"Movies"} 
             ] 
       }]'
-
-More info here:
-<https://developers.facebook.com/docs/marketing-api/audiences/reference/advanced-targeting#broadcategories>
 
     ROW=which(DF_CHARTICS$name=="Away from hometown")
 
@@ -249,17 +293,20 @@ More info here:
     # Retrieving:
     (queryAND_val<-url(query)%>%fromJSON)
 
-Puede encontrar un ejemplo más complejo en el
-[código](https://github.com/SofiaG1l/OlderAdultsCloseSocialNetworks) de
-mi publicación [Close Social Networks Among Older Adults: The Online and
-Offline Perspectives](https://doi.org/10.1007/s11113-021-09682-3).
+You can find a more complex example in the
+[code](https://github.com/SofiaG1l/OlderAdultsCloseSocialNetworks) of my
+article publication: [Close Social Networks Among Older Adults: The
+Online and Offline
+Perspectives](https://doi.org/10.1007/s11113-021-09682-3).
 
-## Agregando variables que no están en la lista:
+## More Sofisticated Queries
 
-Supongamos que quieres descargar por \[nivel educativo\]
-(<https://developers.facebook.com/docs/marketing-api/audiences/reference/advanced-targeting#education_and_workplace>),
-lo que debes hacer es agregar el nivel en la matriz **CHARTICS** como
-una variable más.
+### Adding variables that are not in the lists
+
+Suppose you want to download by [educational
+level](https://developers.facebook.com/docs/marketing-api/audiences/reference/advanced-targeting#education_and_workplace),
+what you need to do is add the level in the **CHARTICS** array as one
+more variable.
 
     EDU='"education_statuses":["1","2"]'
 
@@ -279,8 +326,8 @@ una variable más.
 
     t(query_val$data)
 
-Si necesitas búsquedas por escuela o universidad entonces necesitarás
-descargar los IDS:
+If you need to search by school or university then you will need to
+download the IDS. You can download them here:
 
 <https://developers.facebook.com/docs/marketing-api/audiences/reference/targeting-search#demo>
 
@@ -320,14 +367,14 @@ descargar los IDS:
 
     t(query_val$data)
 
-## Variables geográficas
+### Geographic variables
 
-Chequemos la documentación de Facebook sobre la búsqueda de ciudades:
+Let’s check Facebook’s documentation on city search:
 
 <https://developers.facebook.com/docs/marketing-api/audiences/reference/targeting-search/#cities>
 
-Como ejemplo, descargaremos los datos relativos a las ciudades de
-México. En la documentación de Facebook encontrarás esto:
+As an example, we will download the data related to the cities of
+Mexico. In the Facebook documentation you will find this:
 
     ## Cities
     DF_GEO<-GET(
@@ -342,7 +389,7 @@ México. En la documentación de Facebook encontrarás esto:
         
         q='Mexico',
         
-        country_code='MX', # Puedes eliminar esto para que su consulta sea menos específica
+        country_code='MX', # You can delete this parameter to create an open search
         
         access_token=token,
         
@@ -352,14 +399,14 @@ México. En la documentación de Facebook encontrarás esto:
 
     View(DF_GEO)
 
-### De país a región
+#### From country to region
 
-En el siguiente link puedes encontrar las variables referentes a
-geo-localización:
+In the following link you can find the variables referring to
+geo-location:
 
 <https://developers.facebook.com/docs/marketing-api/audiences/reference/basic-targeting#location>
 
-Comencemos con regiones:
+Let’s start with regions:
 
     ## Cities
     DF_GEO<-GET(
@@ -393,8 +440,8 @@ Comencemos con regiones:
 
     (GEO_QUERY<-url(query)%>%fromJSON)
 
-Para descargar los datos relativos a distintas cuidades sólo necesitas
-incluirlos en la matriz:
+To download the data related to different cities you only need to
+include them in the matrix:
 
     query <- paste0(Credentials,'&
     targeting_spec={"age_min":',Age1,',
@@ -405,7 +452,7 @@ incluirlos en la matriz:
 
     (GEO_QUERY<-url(query)%>%fromJSON)
 
-Ahora descargaremos datos por ciudad:
+Now we will download data by city:
 
     ## Cities
     DF_GEO<-GET(
