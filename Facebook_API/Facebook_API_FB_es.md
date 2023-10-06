@@ -28,6 +28,8 @@
         -   <a href="#de-país-a-región" id="toc-de-país-a-región">De país a
             región</a>
 
+> Última actualización del código: 6 de Octubre del 2023.
+
 <!--  https://bookdown.org/yihui/rmarkdown/html-document.html -->
 
 Este tutorial es una adaptación del que di en 2019:
@@ -112,7 +114,10 @@ paquetes **httr**, **jsonlite** y **tidyverse**.
                     "geo_locations":{"countries":[',C,'],"location_types":["home"]}}')
 
 
-    (query_val<-url(query)%>%fromJSON)
+    # (query_val<-url(query)%>%fromJSON)
+    # La línea anterior en ocasiones no funciona. Depende de la versión de R.
+    # Por éso hay que añadir: gsub('[\n\t ]','',query)
+    (query_val<-url(gsub('[\n\t ]','',query))%>%fromJSON)
 
     t(query_val$data)
 
@@ -175,9 +180,14 @@ cadena inicial, guardaremos la cadena en la variable **CHARTICS**.
                     "messenger_positions":["messenger_home"]}')
 
 
-    query_val<-url(query)%>%fromJSON
+    (query_val<-url(gsub('[\n\t ]','',query))%>%fromJSON)
 
     t(query_val$data)
+
+> Dependiendo de la versión de la API, tal vez tengas que borrar la
+> línea 185:
+
+    "device_platforms":["mobile","desktop"],
 
 En el caso de las características específicas, puedes hacer el siguiente
 tipo de consultas:
@@ -247,7 +257,12 @@ More info here:
                     "messenger_positions":["messenger_home"]}')
 
     # Retrieving:
-    (queryAND_val<-url(query)%>%fromJSON)
+    (queryAND_val<-url(gsub('[\n\t ]','',query))%>%fromJSON)
+
+> Dependiendo de la versión de la API, tal vez tengas que borrar la
+> línea:
+
+    "device_platforms":["mobile","desktop"],
 
 Puede encontrar un ejemplo más complejo en el
 [código](https://github.com/SofiaG1l/OlderAdultsCloseSocialNetworks) de
@@ -256,8 +271,8 @@ Offline Perspectives](https://doi.org/10.1007/s11113-021-09682-3).
 
 ## Agregando variables que no están en la lista:
 
-Supongamos que quieres descargar por \[nivel educativo\]
-(<https://developers.facebook.com/docs/marketing-api/audiences/reference/advanced-targeting#education_and_workplace>),
+Supongamos que quieres descargar por [nivel
+educativo](https://developers.facebook.com/docs/marketing-api/audiences/reference/advanced-targeting#education_and_workplace),
 lo que debes hacer es agregar el nivel en la matriz **CHARTICS** como
 una variable más.
 
@@ -275,9 +290,14 @@ una variable más.
                     "geo_locations":{"countries":[',C,'],"location_types":["home"]}}')
 
 
-    query_val<-url(query)%>%fromJSON
+    query_val<-url(gsub('[\n\t ]','',query))%>%fromJSON
 
     t(query_val$data)
+
+> Dependiendo de la versión de la API, tal vez tengas que borrar la
+> línea:
+
+    "device_platforms":["mobile","desktop"],
 
 Si necesitas búsquedas por escuela o universidad entonces necesitarás
 descargar los IDS:
@@ -316,7 +336,7 @@ descargar los IDS:
                     "geo_locations":{"countries":[',C,'],"location_types":["home"]}}')
 
 
-    query_val<-url(query)%>%fromJSON
+    query_val<-url(gsub('[\n\t ]','',query))%>%fromJSON
 
     t(query_val$data)
 
@@ -391,7 +411,7 @@ Comencemos con regiones:
                     "geo_locations":{"regions": [{"key":"2518"}]},
                     "publisher_platforms":["facebook","messenger"]}')
 
-    (GEO_QUERY<-url(query)%>%fromJSON)
+    (GEO_QUERY<-url(gsub('[\n\t ]','',query))%>%fromJSON)
 
 Para descargar los datos relativos a distintas cuidades sólo necesitas
 incluirlos en la matriz:
@@ -403,7 +423,7 @@ incluirlos en la matriz:
                     "geo_locations":{"regions": [{"key":"2518"},{"key":"2535"}]},
                     "publisher_platforms":["facebook","messenger"]}')
 
-    (GEO_QUERY<-url(query)%>%fromJSON)
+    (GEO_QUERY<-url(gsub('[\n\t ]','',query))%>%fromJSON)
 
 Ahora descargaremos datos por ciudad:
 
@@ -439,7 +459,7 @@ Ahora descargaremos datos por ciudad:
                     },
                     "publisher_platforms":["facebook","messenger"]}')
 
-    (GEO_QUERY<-url(query)%>%fromJSON)
+    (GEO_QUERY<-url(gsub('[\n\t ]','',query))%>%fromJSON)
 
     query <- paste0(Credentials,'&
     targeting_spec={"age_min":',Age1,',
@@ -448,4 +468,4 @@ Ahora descargaremos datos por ciudad:
                     "geo_locations":{"cities": [{"key":"1522110", "radius":25, "distance_unit":"mile"}]},
                     "publisher_platforms":["facebook","messenger"]}')
 
-    (GEO_QUERY<-url(query)%>%fromJSON)
+    (GEO_QUERY<-url(gsub('[\n\t ]','',query))%>%fromJSON)
