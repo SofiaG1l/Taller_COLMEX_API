@@ -342,6 +342,7 @@ DF_CHARTICS<-GET(
 View(DF_CHARTICS)
 
 ```
+
 ```{r, eval=FALSE}
 
 EDU='"education_schools":[{id:125299054202386}]'

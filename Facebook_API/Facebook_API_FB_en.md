@@ -50,7 +50,8 @@ Facebook articles:**
 To generate the token we will need to enable Facebook advertising on
 your Facebook account.
 
-To do this you can follow this guide:
+To do this you can follow this guide, just remember you want to open a
+*Marketing App*:
 <https://github.com/SofiaG1l/Using_Facebook_API/blob/master/First_Step.pdf>
 
 Once you have a developer account, you can use the following links to:
@@ -155,7 +156,7 @@ the format in R using strings.
                     "geo_locations":{"countries":[',C,'],"location_types":["home"]}}')
 
 
-    (query_val<-url(query)%>%fromJSON)
+    (query_val<-url(gsub('[\n\t ]','',query))%>%fromJSON)
 
     t(query_val$data)
 
@@ -219,9 +220,13 @@ we’ll store the string in the variable **CHARTICS**.
                     "messenger_positions":["messenger_home"]}')
 
 
-    query_val<-url(query)%>%fromJSON
+    (query_val<-url(gsub('[\n\t ]','',query))%>%fromJSON)
 
     t(query_val$data)
+
+> Depending on the API version, you may need to delet line 200:
+
+    "device_platforms":["mobile","desktop"],
 
 In the case of specific characteristics, you can make the following
 types of queries:
@@ -262,6 +267,9 @@ In the case of OR we need to group by TYPE. Check the following example:
             ] 
       }]'
 
+More info here:
+<https://developers.facebook.com/docs/marketing-api/audiences/reference/advanced-targeting#broadcategories>
+
     ROW=which(DF_CHARTICS$name=="Away from hometown")
 
     (TYPE_1=DF_CHARTICS$type[ROW])
@@ -293,6 +301,11 @@ In the case of OR we need to group by TYPE. Check the following example:
     # Retrieving:
     (queryAND_val<-url(query)%>%fromJSON)
 
+> Dependiendo de la versión de la API, tal vez tengas que borrar la
+> línea:
+
+    "device_platforms":["mobile","desktop"],
+
 You can find a more complex example in the
 [code](https://github.com/SofiaG1l/OlderAdultsCloseSocialNetworks) of my
 article publication: [Close Social Networks Among Older Adults: The
@@ -322,9 +335,14 @@ more variable.
                     "geo_locations":{"countries":[',C,'],"location_types":["home"]}}')
 
 
-    query_val<-url(query)%>%fromJSON
+    query_val<-url(gsub('[\n\t ]','',query))%>%fromJSON
 
     t(query_val$data)
+
+> Dependiendo de la versión de la API, tal vez tengas que borrar la
+> línea:
+
+    "device_platforms":["mobile","desktop"],
 
 If you need to search by school or university then you will need to
 download the IDS. You can download them here:
@@ -438,7 +456,7 @@ Let’s start with regions:
                     "geo_locations":{"regions": [{"key":"2518"}]},
                     "publisher_platforms":["facebook","messenger"]}')
 
-    (GEO_QUERY<-url(query)%>%fromJSON)
+    (GEO_QUERY<-url(gsub('[\n\t ]','',query))%>%fromJSON)
 
 To download the data related to different cities you only need to
 include them in the matrix:
@@ -450,7 +468,7 @@ include them in the matrix:
                     "geo_locations":{"regions": [{"key":"2518"},{"key":"2535"}]},
                     "publisher_platforms":["facebook","messenger"]}')
 
-    (GEO_QUERY<-url(query)%>%fromJSON)
+    (GEO_QUERY<-url(gsub('[\n\t ]','',query))%>%fromJSON)
 
 Now we will download data by city:
 
@@ -486,7 +504,7 @@ Now we will download data by city:
                     },
                     "publisher_platforms":["facebook","messenger"]}')
 
-    (GEO_QUERY<-url(query)%>%fromJSON)
+    (GEO_QUERY<-url(gsub('[\n\t ]','',query))%>%fromJSON)
 
     query <- paste0(Credentials,'&
     targeting_spec={"age_min":',Age1,',
@@ -495,4 +513,4 @@ Now we will download data by city:
                     "geo_locations":{"cities": [{"key":"1522110", "radius":25, "distance_unit":"mile"}]},
                     "publisher_platforms":["facebook","messenger"]}')
 
-    (GEO_QUERY<-url(query)%>%fromJSON)
+    (GEO_QUERY<-url(gsub('[\n\t ]','',query))%>%fromJSON)
