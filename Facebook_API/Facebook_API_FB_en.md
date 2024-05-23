@@ -1,32 +1,21 @@
--   <a href="#first-step" id="toc-first-step">First step</a>
--   <a href="#api-step-by-step" id="toc-api-step-by-step">API Step by
-    Step</a>
-    -   <a href="#credential-settings" id="toc-credential-settings">Credential
-        Settings</a>
-    -   <a href="#the-basics" id="toc-the-basics">The basics</a>
-        -   <a href="#using-the-facebook-marketing-graphic-user-interface"
-            id="toc-using-the-facebook-marketing-graphic-user-interface">Using the
-            Facebook Marketing Graphic User Interface</a>
-        -   <a href="#using-basic-urls" id="toc-using-basic-urls">1.Using Basic
-            URLs</a>
-        -   <a href="#download-data-programmatically"
-            id="toc-download-data-programmatically">2.Download data
-            programmatically</a>
-        -   <a href="#total-population-disaggregated-by-age-sex-and-country"
-            id="toc-total-population-disaggregated-by-age-sex-and-country">3.Total
-            population disaggregated by age, sex and country</a>
-        -   <a
-            href="#total-population-matching-certain-characteristics-broken-down-by-age-sex-and-country"
-            id="toc-total-population-matching-certain-characteristics-broken-down-by-age-sex-and-country">4.Total
-            population matching certain characteristics broken down by age, sex and
-            country</a>
-    -   <a href="#more-sofisticated-queries"
-        id="toc-more-sofisticated-queries">More Sofisticated Queries</a>
-        -   <a href="#adding-variables-that-are-not-in-the-lists"
-            id="toc-adding-variables-that-are-not-in-the-lists">Adding variables
-            that are not in the lists</a>
-        -   <a href="#geographic-variables" id="toc-geographic-variables">Geographic
-            variables</a>
+-   [First step](#first-step)
+-   [API Step by Step](#api-step-by-step)
+    -   [Credential Settings](#credential-settings)
+    -   [The basics](#the-basics)
+        -   [Using the Facebook Marketing Graphic User
+            Interface](#using-the-facebook-marketing-graphic-user-interface)
+        -   [1.Using Basic URLs](#using-basic-urls)
+        -   [2.Download data
+            programmatically](#download-data-programmatically)
+        -   [3.Total population disaggregated by age, sex and
+            country](#total-population-disaggregated-by-age-sex-and-country)
+        -   [4.Total population matching certain characteristics broken
+            down by age, sex and
+            country](#total-population-matching-certain-characteristics-broken-down-by-age-sex-and-country)
+    -   [More Sofisticated Queries](#more-sofisticated-queries)
+        -   [Adding variables that are not in the
+            lists](#adding-variables-that-are-not-in-the-lists)
+        -   [Geographic variables](#geographic-variables)
 
 <!--  https://bookdown.org/yihui/rmarkdown/html-document.html -->
 
@@ -153,8 +142,9 @@ the format in R using strings.
                     "age_min":',Age1,',
                     "age_max":',Age2,',
                     "genders":[',g,'],
-                    "geo_locations":{"countries":[',C,'],"location_types":["home"]}}')
+                    "geo_locations":{"countries":[',C,']}}')
 
+    # REMOVE: ,"location_types":["home"]
 
     (query_val<-url(gsub('[\n\t ]','',query))%>%fromJSON)
 
@@ -213,20 +203,17 @@ we’ll store the string in the variable **CHARTICS**.
                     "age_max":',Age2,',
                     "genders":[',g,']',
                     CHARTICS,',
-                    "geo_locations":{"countries":[',C,'],"location_types":["home"]},
+                    "geo_locations":{"countries":[',C,']},
                     "facebook_positions":["feed","instant_article","instream_video","marketplace"],
                     "device_platforms":["mobile","desktop"],
                     "publisher_platforms":["facebook","messenger"],
                     "messenger_positions":["messenger_home"]}')
 
+    # REMOVE: ,"location_types":["home"]
 
     (query_val<-url(gsub('[\n\t ]','',query))%>%fromJSON)
 
     t(query_val$data)
-
-> Depending on the API version, you may need to delet line 200:
-
-    "device_platforms":["mobile","desktop"],
 
 In the case of specific characteristics, you can make the following
 types of queries:
@@ -292,19 +279,12 @@ More info here:
                     "age_max":',Age2,',
                     "genders":[',g,']',
                     CHARTICS,',
-                    "geo_locations":{"countries":[',C,'],"location_types":["home"]},
-                    "facebook_positions":["feed","instant_article","instream_video","marketplace"],
-                    "device_platforms":["mobile","desktop"],
-                    "publisher_platforms":["facebook","messenger"],
-                    "messenger_positions":["messenger_home"]}')
+                    "geo_locations":{"countries":[',C,']}}')
+
+    # REMOVE: ,"location_types":["home"]
 
     # Retrieving:
-    (queryAND_val<-url(query)%>%fromJSON)
-
-> Dependiendo de la versión de la API, tal vez tengas que borrar la
-> línea:
-
-    "device_platforms":["mobile","desktop"],
+    queryAND_val<-url(gsub('[\n\t ]','',query))%>%fromJSON
 
 You can find a more complex example in the
 [code](https://github.com/SofiaG1l/OlderAdultsCloseSocialNetworks) of my
@@ -332,17 +312,11 @@ more variable.
                     "age_max":',Age2,',
                     "genders":[',g,']',
                     CHARTICS,',
-                    "geo_locations":{"countries":[',C,'],"location_types":["home"]}}')
-
+                    "geo_locations":{"countries":[',C,']}}')
 
     query_val<-url(gsub('[\n\t ]','',query))%>%fromJSON
 
     t(query_val$data)
-
-> Dependiendo de la versión de la API, tal vez tengas que borrar la
-> línea:
-
-    "device_platforms":["mobile","desktop"],
 
 If you need to search by school or university then you will need to
 download the IDS. You can download them here:
@@ -378,10 +352,9 @@ download the IDS. You can download them here:
                     "age_max":',Age2,',
                     "genders":[',g,']',
                     CHARTICS,',
-                    "geo_locations":{"countries":[',C,'],"location_types":["home"]}}')
+                    "geo_locations":{"countries":[',C,']}}')
 
-
-    query_val<-url(query)%>%fromJSON
+    query_val<-url(gsub('[\n\t ]','',query))%>%fromJSON
 
     t(query_val$data)
 

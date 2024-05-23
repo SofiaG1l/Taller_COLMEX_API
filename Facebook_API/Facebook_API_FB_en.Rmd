@@ -131,8 +131,9 @@ query <- paste0(Credentials,'&
                 "age_min":',Age1,',
                 "age_max":',Age2,',
                 "genders":[',g,'],
-                "geo_locations":{"countries":[',C,'],"location_types":["home"]}}')
+                "geo_locations":{"countries":[',C,']}}')
 
+# REMOVE: ,"location_types":["home"]
 
 (query_val<-url(gsub('[\n\t ]','',query))%>%fromJSON)
 
@@ -195,22 +196,18 @@ targeting_spec={"age_min":',Age1,',
                 "age_max":',Age2,',
                 "genders":[',g,']',
                 CHARTICS,',
-                "geo_locations":{"countries":[',C,'],"location_types":["home"]},
+                "geo_locations":{"countries":[',C,']},
                 "facebook_positions":["feed","instant_article","instream_video","marketplace"],
                 "device_platforms":["mobile","desktop"],
                 "publisher_platforms":["facebook","messenger"],
                 "messenger_positions":["messenger_home"]}')
 
+# REMOVE: ,"location_types":["home"]
 
 (query_val<-url(gsub('[\n\t ]','',query))%>%fromJSON)
 
 t(query_val$data)
 
-```
-
->Depending on the API version, you may need to delet line 200:
-```{r, eval=FALSE}
-"device_platforms":["mobile","desktop"],
 ```
 
 
@@ -285,21 +282,14 @@ targeting_spec={"age_min":',Age1,',
                 "age_max":',Age2,',
                 "genders":[',g,']',
                 CHARTICS,',
-                "geo_locations":{"countries":[',C,'],"location_types":["home"]},
-                "facebook_positions":["feed","instant_article","instream_video","marketplace"],
-                "device_platforms":["mobile","desktop"],
-                "publisher_platforms":["facebook","messenger"],
-                "messenger_positions":["messenger_home"]}')
+                "geo_locations":{"countries":[',C,']}}')
+
+# REMOVE: ,"location_types":["home"]
 
 # Retrieving:
-(queryAND_val<-url(query)%>%fromJSON)
+queryAND_val<-url(gsub('[\n\t ]','',query))%>%fromJSON
 
 
-```
-
->Dependiendo de la versión de la API, tal vez tengas que borrar la línea: 
-```{r, eval=FALSE}
-"device_platforms":["mobile","desktop"],
 ```
 
 
@@ -324,20 +314,13 @@ targeting_spec={"age_min":',Age1,',
                 "age_max":',Age2,',
                 "genders":[',g,']',
                 CHARTICS,',
-                "geo_locations":{"countries":[',C,'],"location_types":["home"]}}')
-
+                "geo_locations":{"countries":[',C,']}}')
 
 query_val<-url(gsub('[\n\t ]','',query))%>%fromJSON
 
 t(query_val$data)
 
 ```
-
->Dependiendo de la versión de la API, tal vez tengas que borrar la línea: 
-```{r, eval=FALSE}
-"device_platforms":["mobile","desktop"],
-```
-
 
 If you need to search by school or university then you will need to download the IDS. You can download them here:
 
@@ -378,10 +361,9 @@ targeting_spec={"age_min":',Age1,',
                 "age_max":',Age2,',
                 "genders":[',g,']',
                 CHARTICS,',
-                "geo_locations":{"countries":[',C,'],"location_types":["home"]}}')
+                "geo_locations":{"countries":[',C,']}}')
 
-
-query_val<-url(query)%>%fromJSON
+query_val<-url(gsub('[\n\t ]','',query))%>%fromJSON
 
 t(query_val$data)
 
