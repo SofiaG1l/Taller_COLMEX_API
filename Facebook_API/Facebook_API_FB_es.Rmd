@@ -8,8 +8,6 @@ output:
     toc_depth: 3  
 ---
 
-> Última actualización del código: 6 de Octubre del 2023.
-
 <!--  https://bookdown.org/yihui/rmarkdown/html-document.html -->
 
 Este tutorial es una adaptación del que di en 2019:
@@ -113,12 +111,9 @@ query <- paste0(Credentials,'&
                 "age_min":',Age1,',
                 "age_max":',Age2,',
                 "genders":[',g,'],
-                "geo_locations":{"countries":[',C,'],"location_types":["home"]}}')
+                "geo_locations":{"countries":[',C,']}}')
 
 
-# (query_val<-url(query)%>%fromJSON)
-# La línea anterior en ocasiones no funciona. Depende de la versión de R.
-# Por éso hay que añadir: gsub('[\n\t ]','',query)
 (query_val<-url(gsub('[\n\t ]','',query))%>%fromJSON)
 
 t(query_val$data)
@@ -180,22 +175,13 @@ targeting_spec={"age_min":',Age1,',
                 "age_max":',Age2,',
                 "genders":[',g,']',
                 CHARTICS,',
-                "geo_locations":{"countries":[',C,'],"location_types":["home"]},
-                "facebook_positions":["feed","instant_article","instream_video","marketplace"],
-                "device_platforms":["mobile","desktop"],
-                "publisher_platforms":["facebook","messenger"],
-                "messenger_positions":["messenger_home"]}')
+                "geo_locations":{"countries":[',C,']}}')
 
 
 (query_val<-url(gsub('[\n\t ]','',query))%>%fromJSON)
 
 t(query_val$data)
 
-```
-
->Dependiendo de la versión de la API, tal vez tengas que borrar la línea 185:
-```{r, eval=FALSE}
-"device_platforms":["mobile","desktop"],
 ```
 
 En el caso de las características específicas, puedes hacer el siguiente tipo de consultas: 
@@ -267,28 +253,19 @@ targeting_spec={"age_min":',Age1,',
                 "age_max":',Age2,',
                 "genders":[',g,']',
                 CHARTICS,',
-                "geo_locations":{"countries":[',C,'],"location_types":["home"]},
-                "facebook_positions":["feed","instant_article","instream_video","marketplace"],
-                "device_platforms":["mobile","desktop"],
-                "publisher_platforms":["facebook","messenger"],
-                "messenger_positions":["messenger_home"]}')
+                "geo_locations":{"countries":[',C,']}}')
 
 # Retrieving:
-(queryAND_val<-url(gsub('[\n\t ]','',query))%>%fromJSON)
+(query_val<-url(gsub('[\n\t ]','',query))%>%fromJSON)
 
 
-```
-
->Dependiendo de la versión de la API, tal vez tengas que borrar la línea: 
-```{r, eval=FALSE}
-"device_platforms":["mobile","desktop"],
 ```
 
 Puede encontrar un ejemplo más complejo en el [código](https://github.com/SofiaG1l/OlderAdultsCloseSocialNetworks) de mi publicación [Close Social Networks Among Older Adults: The Online and Offline Perspectives](https://doi.org/10.1007/s11113-021-09682-3).
 
 ## Agregando variables que no están en la lista:
 
-Supongamos que quieres descargar por [nivel educativo](https://developers.facebook.com/docs/marketing-api/audiences/reference/advanced-targeting#education_and_workplace), lo que debes hacer es agregar el nivel en la matriz **CHARTICS** como una variable más.
+Supongamos que quieres descargar por [nivel educativo] (https://developers.facebook.com/docs/marketing-api/audiences/reference/advanced-targeting#education_and_workplace), lo que debes hacer es agregar el nivel en la matriz **CHARTICS** como una variable más.
 
 ```{r, eval=FALSE}
 
@@ -303,18 +280,13 @@ targeting_spec={"age_min":',Age1,',
                 "age_max":',Age2,',
                 "genders":[',g,']',
                 CHARTICS,',
-                "geo_locations":{"countries":[',C,'],"location_types":["home"]}}')
+                "geo_locations":{"countries":[',C,']}}')
 
 
-query_val<-url(gsub('[\n\t ]','',query))%>%fromJSON
+(query_val<-url(gsub('[\n\t ]','',query))%>%fromJSON)
 
 t(query_val$data)
 
-```
-
->Dependiendo de la versión de la API, tal vez tengas que borrar la línea: 
-```{r, eval=FALSE}
-"device_platforms":["mobile","desktop"],
 ```
 
 Si necesitas búsquedas por escuela o universidad entonces necesitarás descargar los IDS:
@@ -343,6 +315,7 @@ View(DF_CHARTICS)
 
 ```
 
+
 ```{r, eval=FALSE}
 
 EDU='"education_schools":[{id:125299054202386}]'
@@ -356,10 +329,10 @@ targeting_spec={"age_min":',Age1,',
                 "age_max":',Age2,',
                 "genders":[',g,']',
                 CHARTICS,',
-                "geo_locations":{"countries":[',C,'],"location_types":["home"]}}')
+                "geo_locations":{"countries":[',C,']}}')
 
 
-query_val<-url(gsub('[\n\t ]','',query))%>%fromJSON
+(query_val<-url(gsub('[\n\t ]','',query))%>%fromJSON)
 
 t(query_val$data)
 
@@ -442,8 +415,7 @@ query <- paste0(Credentials,'&
 targeting_spec={"age_min":',Age1,',
                 "age_max":',Age2,',
                 "genders":[',g,'],
-                "geo_locations":{"regions": [{"key":"2518"}]},
-                "publisher_platforms":["facebook","messenger"]}')
+                "geo_locations":{"regions": [{"key":"2518"}]}}')
 
 (GEO_QUERY<-url(gsub('[\n\t ]','',query))%>%fromJSON)
 
@@ -459,8 +431,7 @@ query <- paste0(Credentials,'&
 targeting_spec={"age_min":',Age1,',
                 "age_max":',Age2,',
                 "genders":[',g,'],
-                "geo_locations":{"regions": [{"key":"2518"},{"key":"2535"}]},
-                "publisher_platforms":["facebook","messenger"]}')
+                "geo_locations":{"regions": [{"key":"2518"},{"key":"2535"}]}}')
 
 (GEO_QUERY<-url(gsub('[\n\t ]','',query))%>%fromJSON)
 
@@ -505,8 +476,7 @@ targeting_spec={"age_min":',Age1,',
                 "genders":[',g,'],
                 "geo_locations":{
                   "cities":[{"distance_unit":"mile","key":"2673660","name":"Mexico City","region":"Distrito Federal","region_id":"2513","country":"MX","radius":25}]
-                },
-                "publisher_platforms":["facebook","messenger"]}')
+                }}')
 
 (GEO_QUERY<-url(gsub('[\n\t ]','',query))%>%fromJSON)
 
