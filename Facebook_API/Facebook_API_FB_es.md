@@ -1,34 +1,22 @@
--   <a href="#primer-paso" id="toc-primer-paso">Primer paso</a>
--   <a href="#api-paso-a-paso" id="toc-api-paso-a-paso">API Paso a Paso</a>
-    -   <a href="#configuración-de-las-credenciales"
-        id="toc-configuración-de-las-credenciales">Configuración de las
-        credenciales</a>
-    -   <a href="#lo-básico" id="toc-lo-básico">1. Lo Básico</a>
-        -   <a href="#uso-de-la-interfaz-gráfica-de-usuario-de-facebook-marketing"
-            id="toc-uso-de-la-interfaz-gráfica-de-usuario-de-facebook-marketing">Uso
-            de la interfaz gráfica de usuario de Facebook Marketing</a>
-        -   <a href="#utilizando-urls-básicos"
-            id="toc-utilizando-urls-básicos">Utilizando URLs básicos</a>
-    -   <a href="#descarga-de-datos-de-forma-programática"
-        id="toc-descarga-de-datos-de-forma-programática">2. Descarga de datos de
-        forma programática</a>
-    -   <a href="#población-total-desglosada-por-edad-sexo-y-país"
-        id="toc-población-total-desglosada-por-edad-sexo-y-país">3. Población
-        total desglosada por edad, sexo y país</a>
-    -   <a
-        href="#población-total-que-coincide-con-determinadas-características-desglosada-por-edad-sexo-y-país"
-        id="toc-población-total-que-coincide-con-determinadas-características-desglosada-por-edad-sexo-y-país">4.
-        Población total que coincide con determinadas características desglosada
-        por edad, sexo y país</a>
-    -   <a href="#agregando-variables-que-no-están-en-la-lista"
-        id="toc-agregando-variables-que-no-están-en-la-lista">Agregando
-        variables que no están en la lista:</a>
-    -   <a href="#variables-geográficas"
-        id="toc-variables-geográficas">Variables geográficas</a>
-        -   <a href="#de-país-a-región" id="toc-de-país-a-región">De país a
-            región</a>
-
-> Última actualización del código: 6 de Octubre del 2023.
+-   [Primer paso](#primer-paso)
+-   [API Paso a Paso](#api-paso-a-paso)
+    -   [Configuración de las
+        credenciales](#configuración-de-las-credenciales)
+    -   [1. Lo Básico](#lo-básico)
+        -   [Uso de la interfaz gráfica de usuario de Facebook
+            Marketing](#uso-de-la-interfaz-gráfica-de-usuario-de-facebook-marketing)
+        -   [Utilizando URLs básicos](#utilizando-urls-básicos)
+    -   [2. Descarga de datos de forma
+        programática](#descarga-de-datos-de-forma-programática)
+    -   [3. Población total desglosada por edad, sexo y
+        país](#población-total-desglosada-por-edad-sexo-y-país)
+    -   [4. Población total que coincide con determinadas
+        características desglosada por edad, sexo y
+        país](#población-total-que-coincide-con-determinadas-características-desglosada-por-edad-sexo-y-país)
+    -   [Agregando variables que no están en la
+        lista:](#agregando-variables-que-no-están-en-la-lista)
+    -   [Variables geográficas](#variables-geográficas)
+        -   [De país a región](#de-país-a-región)
 
 <!--  https://bookdown.org/yihui/rmarkdown/html-document.html -->
 
@@ -111,12 +99,9 @@ paquetes **httr**, **jsonlite** y **tidyverse**.
                     "age_min":',Age1,',
                     "age_max":',Age2,',
                     "genders":[',g,'],
-                    "geo_locations":{"countries":[',C,'],"location_types":["home"]}}')
+                    "geo_locations":{"countries":[',C,']}}')
 
 
-    # (query_val<-url(query)%>%fromJSON)
-    # La línea anterior en ocasiones no funciona. Depende de la versión de R.
-    # Por éso hay que añadir: gsub('[\n\t ]','',query)
     (query_val<-url(gsub('[\n\t ]','',query))%>%fromJSON)
 
     t(query_val$data)
@@ -173,21 +158,12 @@ cadena inicial, guardaremos la cadena en la variable **CHARTICS**.
                     "age_max":',Age2,',
                     "genders":[',g,']',
                     CHARTICS,',
-                    "geo_locations":{"countries":[',C,'],"location_types":["home"]},
-                    "facebook_positions":["feed","instant_article","instream_video","marketplace"],
-                    "device_platforms":["mobile","desktop"],
-                    "publisher_platforms":["facebook","messenger"],
-                    "messenger_positions":["messenger_home"]}')
+                    "geo_locations":{"countries":[',C,']}}')
 
 
     (query_val<-url(gsub('[\n\t ]','',query))%>%fromJSON)
 
     t(query_val$data)
-
-> Dependiendo de la versión de la API, tal vez tengas que borrar la
-> línea 185:
-
-    "device_platforms":["mobile","desktop"],
 
 En el caso de las características específicas, puedes hacer el siguiente
 tipo de consultas:
@@ -250,19 +226,10 @@ More info here:
                     "age_max":',Age2,',
                     "genders":[',g,']',
                     CHARTICS,',
-                    "geo_locations":{"countries":[',C,'],"location_types":["home"]},
-                    "facebook_positions":["feed","instant_article","instream_video","marketplace"],
-                    "device_platforms":["mobile","desktop"],
-                    "publisher_platforms":["facebook","messenger"],
-                    "messenger_positions":["messenger_home"]}')
+                    "geo_locations":{"countries":[',C,']}}')
 
     # Retrieving:
-    (queryAND_val<-url(gsub('[\n\t ]','',query))%>%fromJSON)
-
-> Dependiendo de la versión de la API, tal vez tengas que borrar la
-> línea:
-
-    "device_platforms":["mobile","desktop"],
+    (query_val<-url(gsub('[\n\t ]','',query))%>%fromJSON)
 
 Puede encontrar un ejemplo más complejo en el
 [código](https://github.com/SofiaG1l/OlderAdultsCloseSocialNetworks) de
@@ -271,8 +238,8 @@ Offline Perspectives](https://doi.org/10.1007/s11113-021-09682-3).
 
 ## Agregando variables que no están en la lista:
 
-Supongamos que quieres descargar por [nivel
-educativo](https://developers.facebook.com/docs/marketing-api/audiences/reference/advanced-targeting#education_and_workplace),
+Supongamos que quieres descargar por \[nivel educativo\]
+(<https://developers.facebook.com/docs/marketing-api/audiences/reference/advanced-targeting#education_and_workplace>),
 lo que debes hacer es agregar el nivel en la matriz **CHARTICS** como
 una variable más.
 
@@ -287,17 +254,12 @@ una variable más.
                     "age_max":',Age2,',
                     "genders":[',g,']',
                     CHARTICS,',
-                    "geo_locations":{"countries":[',C,'],"location_types":["home"]}}')
+                    "geo_locations":{"countries":[',C,']}}')
 
 
-    query_val<-url(gsub('[\n\t ]','',query))%>%fromJSON
+    (query_val<-url(gsub('[\n\t ]','',query))%>%fromJSON)
 
     t(query_val$data)
-
-> Dependiendo de la versión de la API, tal vez tengas que borrar la
-> línea:
-
-    "device_platforms":["mobile","desktop"],
 
 Si necesitas búsquedas por escuela o universidad entonces necesitarás
 descargar los IDS:
@@ -333,10 +295,10 @@ descargar los IDS:
                     "age_max":',Age2,',
                     "genders":[',g,']',
                     CHARTICS,',
-                    "geo_locations":{"countries":[',C,'],"location_types":["home"]}}')
+                    "geo_locations":{"countries":[',C,']}}')
 
 
-    query_val<-url(gsub('[\n\t ]','',query))%>%fromJSON
+    (query_val<-url(gsub('[\n\t ]','',query))%>%fromJSON)
 
     t(query_val$data)
 
@@ -408,8 +370,7 @@ Comencemos con regiones:
     targeting_spec={"age_min":',Age1,',
                     "age_max":',Age2,',
                     "genders":[',g,'],
-                    "geo_locations":{"regions": [{"key":"2518"}]},
-                    "publisher_platforms":["facebook","messenger"]}')
+                    "geo_locations":{"regions": [{"key":"2518"}]}}')
 
     (GEO_QUERY<-url(gsub('[\n\t ]','',query))%>%fromJSON)
 
@@ -420,8 +381,7 @@ incluirlos en la matriz:
     targeting_spec={"age_min":',Age1,',
                     "age_max":',Age2,',
                     "genders":[',g,'],
-                    "geo_locations":{"regions": [{"key":"2518"},{"key":"2535"}]},
-                    "publisher_platforms":["facebook","messenger"]}')
+                    "geo_locations":{"regions": [{"key":"2518"},{"key":"2535"}]}}')
 
     (GEO_QUERY<-url(gsub('[\n\t ]','',query))%>%fromJSON)
 
@@ -456,8 +416,7 @@ Ahora descargaremos datos por ciudad:
                     "genders":[',g,'],
                     "geo_locations":{
                       "cities":[{"distance_unit":"mile","key":"2673660","name":"Mexico City","region":"Distrito Federal","region_id":"2513","country":"MX","radius":25}]
-                    },
-                    "publisher_platforms":["facebook","messenger"]}')
+                    }}')
 
     (GEO_QUERY<-url(gsub('[\n\t ]','',query))%>%fromJSON)
 
